@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory-Retention Learning System Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vis-network/dist/vis-network.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>Memory-Retention Learning System Dashboard</h1>
+            <p class="subtitle">Data Structure-Based Spaced Repetition Platform</p>
+            <p class="description">Track concept retention using memory decay algorithms, priority queues, and knowledge graphs. Optimize your learning through intelligent spaced repetition.</p>
+        </header>
+
+        <!-- Overview Statistics Panel -->
+        <section class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-label">Total Concepts Learned</div>
+                <div class="stat-value" id="totalConcepts">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Average Memory Strength</div>
+                <div class="stat-value" id="avgMemory">0%</div>
+            </div>
+            <div class="stat-card stat-card--warning">
+                <div class="stat-label">Urgent Revisions Needed</div>
+                <div class="stat-value" id="urgentCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Revision Sessions</div>
+                <div class="stat-value" id="totalRevisions">0</div>
+            </div>
+        </section>
+
+        <!-- Priority Revision Queue Section -->
+        <section class="section">
+            <h2>Revision Queue - Priority Topics</h2>
+            <div class="table-container">
+                <table class="revision-table">
+                    <thead>
+                        <tr>
+                            <th>Topic Name</th>
+                            <th>Memory Strength</th>
+                            <th>Maximum Required Days For Next Revision</th>
+                            <th>Priority Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="revisionQueueBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Two Column Layout for Graph and Decay Chart -->
+        <div class="two-column-layout">
+            <!-- Concept Graph Visualization Section -->
+            <section class="section">
+                <h2>Knowledge Dependency Graph</h2>
+                <div id="dependencyGraph" style="height: 400px; border: 1px solid #ccc; border-radius: 8px;"></div>
+            </section>
+
+            <!-- Memory Decay Chart Section -->
+            <section class="section">
+                <h2>Memory Strength Over Time</h2>
+                <div style="height: 350px; position: relative;">
+                    <canvas id="memoryChart"></canvas>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- Learning Progress Section -->
+        <section class="section">
+            <h2>Learning Statistics</h2>
+            <div class="charts-grid">
+                <div class="chart-item">
+                    <h3>Concepts by Category</h3>
+                    <div style="height: 350px; position: relative;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+
+                </div>
+                <div class="chart-item">
+                    <h3>Memory Strength Distribution</h3>
+                    <div style="height: 350px; position: relative;">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Column Layout for Add Concept and Simulation -->
+        <div class="two-column-layout">
+            <!-- Add New Concept Section -->
+            <section class="section">
+                <h2>Learn New Concept</h2>
+                <form id="addConceptForm" class="form">
+                    <div class="form-group">
+                        <label class="form-label" for="conceptName">Concept Name</label>
+                        <input type="text" id="conceptName" class="form-control" placeholder="Enter concept name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="conceptCategory">Category</label>
+                        <select id="conceptCategory" class="form-control" required>
+                            <option value="Algorithms">Algorithms</option>
+                            <option value="Data Structures">Data Structures</option>
+                            <option value="Database">Database</option>
+                            <option value="Programming">Programming</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="conceptPrereqs">Prerequisites</label>
+                        <div id="prereqContainer" class="prereq-container"></div>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Add Concept</button>
+                </form>
+            </section>
+
+            <!-- Simulation Controls -->
+            <section class="section">
+                <h2>Simulation Settings</h2>
+                <div class="simulation-controls">
+                    <div class="form-group">
+                        <label class="form-label" for="decayRate">Decay Rate (λ): <span id="decayRateValue">0.15</span></label>
+                        <input type="range" id="decayRate" min="0.05" max="0.3" step="0.01" value="0.15" class="slider">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="daysToSimulate">Days to Simulate</label>
+                        <input type="number" id="daysToSimulate" class="form-control" value="1" min="1" max="30">
+                    </div>
+                    <button id="simulateTimeBtn" class="btn btn--primary btn--full-width">Simulate Time Passage</button>
+                    <div class="simulation-info">
+                        <div class="info-label">Current Simulation Day:</div>
+                        <div class="info-value" id="currentDay">0</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
